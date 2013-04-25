@@ -1,4 +1,10 @@
 ﻿(P_ARCHETYPE) <
+	is_controlled = <False>
+	is_generated = <True>
+	artefact_object_type = <"DIFFERENTIAL_ARCHETYPE">
+	archetype_id = <"openEHR-EHR-OBSERVATION.apgar.v1">
+	adl_version = <"1.5">
+	artefact_type = <"archetype">
 	original_language = <[ISO_639-1::en]>
 	translations = <
 		["fa"] = <
@@ -160,10 +166,6 @@ Whaley LF, Wong DL (1979).  Nursing Care of Infants and Children.  St. Louis, To
 http://en.wikipedia.org/wiki/Apgar_score">
 		>
 	>
-	artefact_object_type = <"DIFFERENTIAL_ARCHETYPE">
-	archetype_id = <"openEHR-EHR-OBSERVATION.apgar.v1">
-	adl_version = <"1.5">
-	artefact_type = <"archetype">
 	definition = <
 		rm_type_name = <"OBSERVATION">
 		node_id = <"at0000">
@@ -1697,6 +1699,4 @@ http://en.wikipedia.org/wiki/Apgar_score">
 			>
 		>
 	>
-	is_controlled = <False>
-	is_generated = <True>
 >

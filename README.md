@@ -125,6 +125,10 @@ ODIN data may be in the form of identified objects in a standalone document, e.g
 >
 ```
 
+## Comments
+
+Comments in ODIN are identified by the '--' leader, and can be after actual content, or be in a multi-line block.
+
 ## Paths
 
 Paths are obtainable for every node in an ODIN document. The paths of the leaf values in the above document are as follows:
@@ -148,7 +152,7 @@ Container objects, other than of primitive types, are always in the form of a ke
 	>
 ```
 
-The above could be converted to a data structure of the form List<String>, or Hash<String>. If the latter, the hash keys are 1, 2, 3. The contained objects can be of any complexity, including more container objects, e.g. types like Hash <ArrayList <Person>, String>. Here is an example containing some nested containers:
+The above could be converted to a data structure of the form `List<String>`, or `Hash<String>`. If the latter, the hash keys are the Integers 1, 2, 3. The contained objects can be of any complexity, including more container objects, e.g. types like `Hash <ArrayList <Person>, String>`. Here is an example containing some nested containers:
 
 ```ODIN
 	term_definitions = <
@@ -177,9 +181,16 @@ The above could be converted to a data structure of the form List<String>, or Ha
 	>
 ```
 
+Paths for the above include:
+
+```ODIN
+	term_definitions["en"]/["at0001"]/text
+	term_definitions["en"]/["at0002"]/description
+```
+
 ## Dynamic Typing
 
-It is very common for a statically declared schema or model to have a property such as Hash <Person, String>, and for the actual data to include concrete subtypes of Person. Thesubtype instances might have different properties than those statically declared in the Person type. This can only be dealt with by using type markers for such objects. The following is an example of this:
+It is very common for a statically declared schema or model to have a property such as `Hash <Person, String>`, and for the actual data to include concrete subtypes of Person. Thesubtype instances might have different properties than those statically declared in the Person type. This can only be dealt with by using type markers for such objects. The following is an example of this:
 
 ```ODIN
 destinations = 	<
@@ -200,7 +211,49 @@ destinations = 	<
 
 ## Primitive Types
 
-TBC
+All primitive types are expressed using lexical forms that allow their type (String, Integer etc) to be inferred by a compiler. In the following, the lexical form indicates the value as it would appear within the <> delimiters, i.e. the '...' in `some_value = <...>`. Multiple possible lexical forms are separated by commas in the table.
+
+| Type name         | Lexical form                   | Notes             |
+| ----------------- | ------------------------------ | ----------------- |
+| String            | "this is a string"             | may be multi-line |
+| Character         | 'x'                            |                   |
+| Integer           | 1234 , 10e22                   |                   |
+| Real              | 12.0 , 6.023e23                |                   |
+| Boolean           | True , False                   |                   |
+|                   |                                |                   |
+| Date              | 2004-07-12                     | ISO8601           |
+| Partial Date      | 2004-??-??                     | ISO8601-based     |
+| DateTime          | 2004-07-12T13:05:00 ,          | ISO8601           |
+|                   | 2004-07-12T13:05:00+0100       |                   |
+| Partial DateTime  | 2004-07-12T13:??:?? ,          | ISO8601-based     |
+| Time              | 13:05:00 , 13:05:00.014        | ISO8601           |
+| Partial Time      | 13:05:??                       | ISO8601-based     |
+| Duration          | P2Y13D                         | ISO8601           |
+|                   |                                |                   |
+| URI               | http://get.files.com?name=...  | RFC 3986          |
+| Coded term        | \[ICD10:A10.5\]                |                   |
+
+## Lists of Primitive Types
+
+A list of items of any of the above types can be formed as a comma-separated list of primitive items, i.e.
+
+	date_list_value = <2004-12-18, 2007-03-01>
+
+## Intervals of Ordered Primitive Types
+
+For the ordered types from the above list (Integer, Real, Date, DateTime, Time, Duration), an interval leaf value can be formed, following the patterns below:
+
+```
+|N..M|   the two-sided range N >= x <= M;
+|N>..M|  the two-sided range N > x <= M;
+|N..<M|  the two-sided range N >= x <M;
+|N>..<M| the two-sided range N > x <M;
+|<N|     the one-sided range x < N;
+|>N|     the one-sided range x > N;
+|>=N|    the one-sided range x >= N;
+|<=N|    the one-sided range x <= N;
+|N +/-M| interval of N +/-M.
+```
 
 # Implementations
 

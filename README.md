@@ -1,25 +1,20 @@
-ODIN (Object Data Instance Notation)
-====================================
+# ODIN (Object Data Instance Notation)
 
-What is it?
------------
+## What is it?
 
 ODIN is yet another non-XML object data serialisation syntax. I.e. something like JSON and YAML. Read on to understand its history and current raison d'être.
 
-Micro-history
--------------
+## Micro-history
 
 The ODIN object data syntax started life in about 2003, when the [openEHR](http://www.openehr.org) Archetype tooling project needed a powerful, human-readable, computable data syntax for expressing parts of archetypes, which are expressed in the ADL (Archetype Definition Language) syntax, which happens to be an ISO standard (13606-2). We didn't want to use XML because it was too unreadable for humans, and introduced the complexity of 'attributes' and 'elements'. For the last decade or so, ODIN was known as 'dADL', i.e. 'data ADL'. You can see references to 'dADL' all over the place in [this specification for ADL](http://www.openehr.org/releases/1.0.2/architecture/am/adl.pdf). This isn't a very good name for a generic object serialisation syntax, so we finally decided to change it and bring the baby out onto the stage in its own right.
 
 To do that, it needed a new name, something nice, sayable, and if it makes you think of Asgaard and Wagner, all the better.... hence ODIN, an acronym describing perfectly what it does.
 
-Specification
-=============
+# Specification
 
 There is a proper specification (PDF) [here](http://www.openehr.org/releases/trunk/architecture/syntaxes/ODIN.pdf). Here are some highlights.
 
-Example
--------
+## Example
 
 First of all, an example piece of ODIN, to give you the feel.
 
@@ -60,8 +55,7 @@ Some serious examples:
 * [An object model schema file](https://github.com/openEHR/odin/blob/master/examples/openehr_demographic_102.bmm)
 * [An openEHR archetype, in ODIN](https://github.com/openEHR/odin/blob/master/examples/person_archetype.odin)
 
-Aims
-----
+## Aims
 
 The aims of ODIN are as follows:
 * properly human-readable and writable
@@ -79,10 +73,10 @@ The aims of ODIN are as follows:
 
 The current implementations support all of the above to some extent, although probably not uniformly yet.
 
-Kinds of ODIN Artefact
-----------------------
+## Kinds of ODIN Artefact
 
-*Embedded Fragment*
+### Embedded Fragment
+
 ODIN can be embedded in something else, typically as follows:
 ```ODIN
 .... other formalism text ....
@@ -102,10 +96,12 @@ attr_2 =	 <
 .... other formalism text ...
 ```
 
-*Implicit Object Document*
+### Implicit Object Document
+
 A very common form of ODIN is the above, in a document on its own. I.e. no object ids, no schema.
 
-*Identified Object Document*
+### Identified Object Document
+
 ODIN data may be in the form of identified objects in a standalone document, e.g.
 
 ```ODIN
@@ -128,8 +124,7 @@ ODIN data may be in the form of identified objects in a standalone document, e.g
 >
 ```
 
-Paths
------
+## Paths
 
 Paths are obtainable for every node in an ODIN document. The paths of the leaf values in the above document are as follows:
 
@@ -140,8 +135,8 @@ Paths are obtainable for every node in an ODIN document. The paths of the leaf v
 
 Paths are shown for other examples below.
 
-Container Objects
------------------
+## Container Objects
+
 Container objects, other than of primitive types, are always in the form of a keyed series of objects, where the keys may be actual keys, as in a Hash or Dictionary, or may not exist in the object data. Typical example:
 
 ```ODIN
@@ -181,8 +176,7 @@ The above could be converted to a data structure of the form List<String>, or Ha
 	>
 ```
 
-Dynamic Typing
---------------
+## Dynamic Typing
 
 It is very common for a statically declared schema or model to have a property such as Hash <Person, String>, and for the actual data to include concrete subtypes of Person. Thesubtype instances might have different properties than those statically declared in the Person type. This can only be dealt with by using type markers for such objects. The following is an example of this:
 
@@ -203,13 +197,11 @@ destinations = 	<
 >
 ```
 
-Primitive Types
----------------
+## Primitive Types
 
 TBC
 
-Implementations
-===============
+# Implementations
 
 There are implementations currently in use in at least Java, C#.Net, Ruby and Eiffel. These are all currently part of other projects in the [openEHR project](https://github.com/openEHR). We are now working to extract these into standalone tools - i.e. ODIN parsers and serialisers.
 

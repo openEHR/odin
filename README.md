@@ -49,11 +49,12 @@ First of all, an example piece of ODIN, to give you the feel.
 	>
 ```
 
-Some serious examples:
+Some serious ODIN examples:
 
 * [An application config file](https://github.com/openEHR/odin/blob/master/examples/adl_workbench.cfg)
 * [An object model schema file](https://github.com/openEHR/odin/blob/master/examples/openehr_demographic_102.bmm)
-* [An openEHR archetype, in ODIN](https://github.com/openEHR/odin/blob/master/examples/person_archetype.odin)
+* [An ODIN openEHR archetype](https://github.com/openEHR/odin/blob/master/examples/person_archetype.odin)
+* [An ODIN openEHR archetype full of unicode](https://github.com/openEHR/odin/blob/master/examples/openEHR-EHR-OBSERVATION.apgar.v1.odin)
 
 ## Aims
 

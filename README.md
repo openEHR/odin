@@ -9,7 +9,7 @@ ODIN is yet another non-XML object data serialisation syntax. I.e. something lik
 Micro-history
 -------------
 
-The ODIN object data syntax started life in about 2003, when the [openEHR](http://www.openehr.org) Archetype tooling project needed a powerful, human-readable, computable data syntax for expressing parts of archetypes, which are expressed in the ADL (Archetype Definition Language) syntax, which happens to be an ISO standard (13606-2). We didn't want to use XML because it was too unreadable for humans, and introduced the complexity of 'attributes' and 'elements'. For the last decade or so, ODIN was known as 'dADL', i.e. 'data ADL'. You can see references to 'dADL' all over the place in this specification for ADL. This isn't a very good name for a generic object serialisation syntax, so we finally decided to change it and bring the baby out onto the stage in its own right.
+The ODIN object data syntax started life in about 2003, when the [openEHR](http://www.openehr.org) Archetype tooling project needed a powerful, human-readable, computable data syntax for expressing parts of archetypes, which are expressed in the ADL (Archetype Definition Language) syntax, which happens to be an ISO standard (13606-2). We didn't want to use XML because it was too unreadable for humans, and introduced the complexity of 'attributes' and 'elements'. For the last decade or so, ODIN was known as 'dADL', i.e. 'data ADL'. You can see references to 'dADL' all over the place in [this specification for ADL](http://www.openehr.org/releases/1.0.2/architecture/am/adl.pdf). This isn't a very good name for a generic object serialisation syntax, so we finally decided to change it and bring the baby out onto the stage in its own right.
 
 To do that, it needed a new name, something nice, sayable, and if it makes you think of Asgaard and Wagner, all the better.... hence ODIN, an acronym describing perfectly what it does.
 
@@ -23,7 +23,7 @@ Example
 
 First of all, an example piece of ODIN, to give you the feel.
 
-```odin
+```ODIN
 	school_schedule = <
 		lesson_times = <08:30:00, 09:30:00, 10:30:00, ...>
 		locations = <
@@ -66,6 +66,7 @@ Aims
 The aims of ODIN are as follows:
 * properly human-readable and writable
 * computable
+* mappable to regular object-oriented structures, but without requiring a schema
 * unicode as native coding (UTF-8)
 * sophisticated leaf data types, including dates, times, lists of primitive values and intervals of numeric primitive values
 * leaf data type is inferrable from leaf data syntax
@@ -76,8 +77,134 @@ The aims of ODIN are as follows:
 * supports references to shared objects, including across files
 * has a defined in-memory 'data tree' model for parsers to map to (same concept as an XML DOM tree)
 
+The current implementations support all of the above to some extent, although probably not uniformly yet.
+
 Kinds of ODIN Artefact
 ----------------------
+
+*Embedded Fragment*
+ODIN can be embedded in something else, typically as follows:
+```ODIN
+.... other formalism text ....
+.... delimiter ...
+--
+-- ODIN Embedded Fragment
+--
+attr_1 =	 <
+	attr_12 = <
+		attr_13 = <leaf_value>
+	>
+>
+attr_2 =	 <
+	attr_22 = <leaf_value>
+>
+.... delimiter ....
+.... other formalism text ...
+```
+
+*Implicit Object Document*
+A very common form of ODIN is the above, in a document on its own. I.e. no object ids, no schema.
+
+*Identified Object Document*
+ODIN data may be in the form of identified objects in a standalone document, e.g.
+
+```ODIN
+--
+-- ODIN Identified Object Document
+--
+[id_1] = <
+	attr_1 =	 <
+		attr_12 = <
+			attr_13 = <leaf_value>
+		>
+	>
+>
+[id_2] = <
+	attr_1 =	 <
+		attr_12 = <
+			attr_13 = <leaf_value>
+		>
+	>
+>
+```
+
+Paths
+-----
+
+Paths are obtainable for every node in an ODIN document. The paths of the leaf values in the above document are as follows:
+
+```
+[id_1]/attr_1/attr_12/attr_13
+[id_2]/attr_1/attr_12/attr_13
+```
+
+Paths are shown for other examples below.
+
+Container Objects
+-----------------
+Container objects, other than of primitive types, are always in the form of a keyed series of objects, where the keys may be actual keys, as in a Hash or Dictionary, or may not exist in the object data. Typical example:
+
+```ODIN
+	locations = <
+		[1] = <"under the big plane tree">
+		[2] = <"under the north arch">
+		[3] = <"in a garden">
+	>
+```
+
+The above could be converted to a data structure of the form List<String>, or Hash<String>. If the latter, the hash keys are 1, 2, 3. The contained objects can be of any complexity, including more container objects, e.g. types like Hash <ArrayList <Person>, String>. Here is an example containing some nested containers:
+
+```ODIN
+	term_definitions = <
+		["en"] = <
+			["at0000"] = <
+				text = <"General statement of exclusions or states">
+				description = <"A category of conditions or states which have been excluded">
+			>
+			["at0001"] = <
+				text = <"Tree">
+				description = <"@ internal @">
+			>
+			["at0002"] = <
+				text = <"Statement">
+				description = <"The statement about what is excluded">
+			>
+			["at0003"] = <
+				text = <"No significant illness">
+				description = <"The person has no significant medical condition">
+			>
+			["at0004"] = <
+				text = <"No significant past history">
+				description = <"The person has no significant past medical history">
+			>
+		>
+	>
+```
+
+Dynamic Typing
+--------------
+
+It is very common for a statically declared schema or model to have a property such as Hash <Person, String>, and for the actual data to include concrete subtypes of Person. Thesubtype instances might have different properties than those statically declared in the Person type. This can only be dealt with by using type markers for such objects. The following is an example of this:
+
+```ODIN
+destinations = 	<
+	["seville"] = (TOURIST_DESTINATION) <
+		profile = (DESTINATION_PROFILE) <...>
+		hotels = (List<HOTEL>) < -- this just repeats the static declaration
+			["gran sevilla"] = (HISTORIC_HOTEL) <...>
+			["sofitel"] = (LUXURY_HOTEL) <...>
+			["hotel real"] = (PENSION) <...>
+		>
+		attractions = <
+			["la corrida"] = (SPORT_VENUE) <...>
+			["Alcázar"] = (HISTORIC_SITE) <...>
+		>
+	>
+>
+```
+
+Primitive Types
+---------------
 
 TBC
 

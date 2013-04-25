@@ -20,7 +20,7 @@ First of all, an example piece of ODIN, to give you the feel.
 
 ```ODIN
 	school_schedule = <
-		lesson_times = <08:30:00, 09:30:00, 10:30:00, ...>
+		lesson_times = <08:30:00, 09:30:00, 10:30:00>
 		locations = <
 			[1] = <"under the big plane tree">
 			[2] = <"under the north arch">
@@ -209,6 +209,38 @@ destinations = 	<
 >
 ```
 
+## Object Referencing
+
+In the following example, the hotels in `["travel_db_0293822"]/destinations["seville"]/hotels` have values that are paths to entries in the `\["tourism_db_13"\]` object.
+
+```ODIN
+	["travel_db_0293822"] = <
+		destinations = <
+			["seville"] = <
+				hotels = <
+					["gran sevilla"] = <["tourism_db_13"]/hotels["gran sevilla"]>
+					["sofitel"] = <["tourism_db_13"]/hotels["sofitel"]>
+					["hotel real"] = <["tourism_db_13"]/hotels["hotel real"]>
+				>
+			>
+		>
+		bookings = <
+			["seville:0134"] = <
+				customer_id = <"0134">
+				period = <...>
+				hotel = <["tourism_db_13"]/hotels["sofitel"]>
+			>
+		>
+	>
+	["tourism_db_13"] = <
+		hotels = <
+			["gran sevilla"] = (HISTORIC_HOTEL) <...>
+			["sofitel"] = (LUXURY_HOTEL) <...>
+			["hotel real"] = (PENSION) <...>
+		>
+	>
+```
+
 ## Primitive Types
 
 All primitive types are expressed using lexical forms that allow their type (String, Integer etc) to be inferred by a compiler. In the following, the lexical form indicates the value as it would appear within the <> delimiters, i.e. the '...' in `some_value = <...>`. Multiple possible lexical forms are separated by commas in the table.
@@ -231,7 +263,7 @@ All primitive types are expressed using lexical forms that allow their type (Str
 | Duration          | P2Y13D                         | ISO8601           |
 |                   |                                |                   |
 | URI               | http://get.files.com?name=...  | RFC 3986          |
-| Coded term        | \[ICD10:A10.5\]                |                   |
+| Coded term        | \[ICD10::A10.5\]               |                   |
 
 ## Lists of Primitive Types
 

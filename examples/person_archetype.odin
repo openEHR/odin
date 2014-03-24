@@ -34,15 +34,15 @@
 				use = <"Used in demographic service to collect a person's data.">
 				keywords = <"demographic service", "person's data">
 				misuse = <"">
-				copyright = <"© openEHR Foundation">
+				copyright = <"Â© openEHR Foundation">
 			>
 			["pt-br"] = <
 				language = <[ISO_639-1::pt-br]>
-				purpose = <"Representação dos dados demográficos de uma pessoa.">
-				use = <"Usado em serviço demográficos para coletar os dados de uma pessoa.">
-				keywords = <"serviço demográfico", "dados de uma pessoa">
+				purpose = <"RepresentaÃ§Ã£o dos dados demogrÃ¡ficos de uma pessoa.">
+				use = <"Usado em serviÃ§o demogrÃ¡ficos para coletar os dados de uma pessoa.">
+				keywords = <"serviÃ§o demogrÃ¡fico", "dados de uma pessoa">
 				misuse = <"">
-				copyright = <"© openEHR Foundation">
+				copyright = <"Â© openEHR Foundation">
 			>
 		>
 		lifecycle_state = <"Authordraft">
@@ -192,7 +192,7 @@
 				>
 				["at0001"] = <
 					text = <"Detalhes">
-					description = <"Detalhes demográficos da pessoa.">
+					description = <"Detalhes demogrÃ¡ficos da pessoa.">
 				>
 				["at0002"] = <
 					text = <"Nome">
@@ -204,11 +204,11 @@
 				>
 				["at0004"] = <
 					text = <"Relacionamentos">
-					description = <"Relacionamentos de uma pessoa, especialmente laços familiares.">
+					description = <"Relacionamentos de uma pessoa, especialmente laÃ§os familiares.">
 				>
 				["at0030"] = <
-					text = <"Endereço">
-					description = <"Endereços vinculados a um único contato, ou seja, com o mesmo período de validade.">
+					text = <"EndereÃ§o">
+					description = <"EndereÃ§os vinculados a um Ãºnico contato, ou seja, com o mesmo perÃ­odo de validade.">
 				>
 				["at0040"] = <
 					text = <"Grau de parentesco">
@@ -249,8 +249,8 @@
 		constraint_definitions = <
 			["pt-br"] = <
 				["ac0000"] = <
-					text = <"Códigos para tipo de parentesco">
-					description = <"códigos válidos para tipo de parentesco.">
+					text = <"CÃ³digos para tipo de parentesco">
+					description = <"cÃ³digos vÃ¡lidos para tipo de parentesco.">
 				>
 			>
 			["en"] = <
